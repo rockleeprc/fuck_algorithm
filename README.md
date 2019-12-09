@@ -1,2 +1,2 @@
-# fuck_algorithm
+# fuck-algorithm
 数据结构
