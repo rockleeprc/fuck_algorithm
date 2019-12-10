@@ -6,10 +6,10 @@ import java.util.Arrays;
 /**
  * 动态数组
  */
-public class ArrayList {
+public class ArrayList<E> {
 
     public static void main(String[] args) {
-        ArrayList list = new ArrayList();
+        ArrayList<Integer> list = new ArrayList();
         list.add(1);
         list.add(2);
         list.add(3);
@@ -18,8 +18,8 @@ public class ArrayList {
         list.add(6);
         System.out.println(list);
 
-//        int old = list.remove(5);
-//        System.out.println(old);
+        int old = list.remove(5);
+        System.out.println(old);
 
         list.add(0, 22);
         System.out.println(list);
@@ -27,7 +27,7 @@ public class ArrayList {
 
 
     private int size;
-    private int[] elements;
+    private E[] elements;
 
     private static final int DEFAULT_CAPACITY = 2;
 
@@ -37,7 +37,7 @@ public class ArrayList {
 
     public ArrayList(int capacity) {
         capacity = (capacity <= DEFAULT_CAPACITY) ? DEFAULT_CAPACITY : capacity;
-        elements = new int[capacity];
+        elements = (E[]) new Object[capacity];
     }
 
     public int size() {
@@ -48,15 +48,15 @@ public class ArrayList {
         return size == 0;
     }
 
-    public int get(int index) {
+    public E get(int index) {
         rangeCheck(index);
         return elements[index];
     }
 
-    public int set(int index, int element) {
+    public E set(int index, E element) {
         rangeCheck(index);
 
-        int oldValue = elements[index];
+        E oldValue = elements[index];
         elements[index] = element;
         return oldValue;
     }
@@ -67,18 +67,18 @@ public class ArrayList {
      * @param index
      * @return
      */
-    public int remove(int index) {
+    public E remove(int index) {
         rangeCheck(index);
 
-        int old = elements[index];
+        E old = elements[index];
         for (int i = index + 1; i < size; i++) {
             elements[i - 1] = elements[i];
         }
-        size--;
+        elements[--size] = null;
         return old;
     }
 
-    public int indexOf(int element) {
+    public int indexOf(E element) {
         for (int i = 0; i < size; i++) {
             if (element == elements[i]) {
                 return i;
@@ -87,15 +87,18 @@ public class ArrayList {
         return -1;
     }
 
-    public boolean constains(int element) {
+    public boolean constains(E element) {
         return indexOf(element) != -1;
     }
 
     public void clear() {
+        for (int i = 0; i < size; i++) {
+            elements[i] = null;
+        }
         size = 0;
     }
 
-    public void add(int element) {
+    public void add(E element) {
         add(size, element);
     }
 
@@ -105,7 +108,7 @@ public class ArrayList {
      * @param index
      * @param element
      */
-    public void add(int index, int element) {
+    public void add(int index, E element) {
         rangeCheckForAdd(index);
         ensureCapacity(size + 1);
 
@@ -129,7 +132,7 @@ public class ArrayList {
         if (oldCapacity > capacity) return;
 
         int newCapacity = oldCapacity + (oldCapacity >> 1);
-        int[] newElements = new int[newCapacity];
+        E[] newElements = (E[]) new Object[newCapacity];
         for (int i = 0; i < size; i++) {
             newElements[i] = elements[i];
         }
