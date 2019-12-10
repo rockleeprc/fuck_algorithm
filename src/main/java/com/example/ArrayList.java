@@ -7,6 +7,7 @@ import java.util.Arrays;
  * 动态数组
  */
 public class ArrayList {
+
     public static void main(String[] args) {
         ArrayList list = new ArrayList();
         list.add(1);
@@ -16,8 +17,11 @@ public class ArrayList {
         list.add(5);
         list.add(6);
         System.out.println(list);
-        int old = list.remove(5);
-        System.out.println(old);
+
+//        int old = list.remove(5);
+//        System.out.println(old);
+
+        list.add(0, 22);
         System.out.println(list);
     }
 
@@ -25,7 +29,7 @@ public class ArrayList {
     private int size;
     private int[] elements;
 
-    private static final int DEFAULT_CAPACITY = 10;
+    private static final int DEFAULT_CAPACITY = 2;
 
     public ArrayList() {
         this(DEFAULT_CAPACITY);
@@ -45,27 +49,31 @@ public class ArrayList {
     }
 
     public int get(int index) {
-        if (index < 0 || index >= size) {
-            throw new IndexOutOfBoundsException("index = " + index + ",size=" + size);
-        }
+        rangeCheck(index);
         return elements[index];
     }
 
     public int set(int index, int element) {
-        if (index < 0 || index >= size) {
-            throw new IndexOutOfBoundsException("index = " + index + ",size=" + size);
-        }
+        rangeCheck(index);
+
         int oldValue = elements[index];
         elements[index] = element;
         return oldValue;
     }
 
+    /**
+     * System.arraycopy(elements,index+1,elements,index,size-index);
+     *
+     * @param index
+     * @return
+     */
     public int remove(int index) {
+        rangeCheck(index);
+
         int old = elements[index];
         for (int i = index + 1; i < size; i++) {
             elements[i - 1] = elements[i];
         }
-//        System.arraycopy(elements,index+1,elements,index,size-index);
         size--;
         return old;
     }
@@ -88,15 +96,24 @@ public class ArrayList {
     }
 
     public void add(int element) {
-        // TODO 扩容
-        elements[size++] = element;
+        add(size, element);
     }
 
+    /**
+     * System.arraycopy(elements, index, elements, index + 1, size - index);
+     *
+     * @param index
+     * @param element
+     */
     public void add(int index, int element) {
-        // TODO 扩容
+        rangeCheckForAdd(index);
+        ensureCapacity(size + 1);
 
-        System.arraycopy(elements, index, elements, index + 1, size - index);
+        for (int i = size; i > index; i--) {
+            elements[i] = elements[i - 1];
+        }
         elements[index] = element;
+        size++;
     }
 
     @Override
@@ -105,5 +122,35 @@ public class ArrayList {
                 "size=" + size +
                 ", elements=" + Arrays.toString(elements) +
                 '}';
+    }
+
+    private void ensureCapacity(int capacity) {
+        int oldCapacity = elements.length;
+        if (oldCapacity > capacity) return;
+
+        int newCapacity = oldCapacity + (oldCapacity >> 1);
+        int[] newElements = new int[newCapacity];
+        for (int i = 0; i < size; i++) {
+            newElements[i] = elements[i];
+        }
+        elements = newElements;
+        System.out.println("oldCapacity=" + oldCapacity + ",newCapacity" + newCapacity);
+    }
+
+    private void rangeCheckForAdd(int index) {
+        if (index < 0 || index > size) {
+            indexOutOfBoundException(index);
+        }
+
+    }
+
+    private void rangeCheck(int index) {
+        if (index < 0 || index >= size) {
+            indexOutOfBoundException(index);
+        }
+    }
+
+    private void indexOutOfBoundException(int index) {
+        throw new IndexOutOfBoundsException("index = " + index + ",size=" + size);
     }
 }
