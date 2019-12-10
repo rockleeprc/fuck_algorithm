@@ -17,7 +17,7 @@ public class Fib {
 
         for (int i = 0; i < n - 1; i++) {
             second = first + second;
-            first = second - first;
+            first = second - first;// 原来窗口的second是下一个窗口的first
         }
         return second;
     }
