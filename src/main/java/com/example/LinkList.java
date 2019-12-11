@@ -32,7 +32,7 @@ public class LinkList<E> {
 
     public void add(int index, E element) {
         if (index == 0) {
-            first.next = new Node<E>(element, first.next);
+            first = new Node<E>(element, first);
         } else {
             Node<E> prev = node(index - 1);
             prev.next = new Node<E>(element, prev.next);
