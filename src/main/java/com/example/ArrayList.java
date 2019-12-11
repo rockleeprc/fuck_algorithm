@@ -79,9 +79,17 @@ public class ArrayList<E> {
     }
 
     public int indexOf(E element) {
-        for (int i = 0; i < size; i++) {
-            if (element == elements[i]) {
-                return i;
+        if (element == null) {
+            for (int i = 0; i < size; i++) {
+                if (elements[i] == null) {
+                    return i;
+                }
+            }
+        } else {
+            for (int i = 0; i < size; i++) {
+                if (element.equals(elements[i])) {
+                    return i;
+                }
             }
         }
         return -1;
