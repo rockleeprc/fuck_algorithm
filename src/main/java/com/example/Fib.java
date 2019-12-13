@@ -1,6 +1,7 @@
 package com.example;
 
-import java.util.concurrent.locks.ReentrantLock;
+import java.util.Optional;
+import java.util.function.Function;
 
 /**
  * 斐波那契数列
@@ -10,6 +11,12 @@ public class Fib {
     public static void main(String[] args) {
 //        System.out.println(fib1(30));
         System.out.println(fib2(164));
+
+        System.out.println(echo((time)->String.valueOf(time)+"AA"));
+    }
+
+    private static String echo(Function<Long, String> fun) {
+        return fun.apply(System.currentTimeMillis());
     }
 
     private static int fib3(int n) {
