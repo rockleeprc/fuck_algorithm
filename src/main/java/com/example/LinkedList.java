@@ -1,8 +1,14 @@
 package com.example;
 
-public class LinkList<E> {
+public class LinkedList<E> {
     public static void main(String[] args) {
-
+        LinkedList<String> list = new LinkedList();
+        list.add("C");
+        list.add("D");
+        System.out.println(list);
+        list.add(2, "B");
+        list.add(1, "b");
+        System.out.println(list);
     }
 
     private int size;
@@ -30,6 +36,10 @@ public class LinkList<E> {
         return oldValue;
     }
 
+    public void add(E element) {
+        add(size, element);
+    }
+
     public void add(int index, E element) {
         if (index == 0) {
             first = new Node<E>(element, first);
@@ -48,7 +58,24 @@ public class LinkList<E> {
         return node;
     }
 
+    private void delete(Node node) {
+        node.element = node.element;
+        node.next = node.next.next;
+    }
+
     private void checkRange(int index) {
 
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        Node node = first;
+        for (int i = 0; i < size; i++) {
+            if (i != 0) sb.append(",");
+            sb.append(node.element);
+            node = node.next;
+        }
+        return sb.toString();
     }
 }
