@@ -60,17 +60,20 @@ public class LinkList<E> {
         return node;
     }
 
-    private void delete(Node node) {
-        node.element = node.element;
-        node.next = node.next.next;
-    }
-
     private void checkRangeForAdd(int index) {
-
+        if (index < 0 || index > index) {
+            indexOutOfBoundException(index);
+        }
     }
 
     private void checkRange(int index) {
+        if (index < 0 || index >= index) {
+            indexOutOfBoundException(index);
+        }
+    }
 
+    private void indexOutOfBoundException(int index) {
+        throw new IndexOutOfBoundsException("index = " + index + ",size=" + size);
     }
 
     @Override
