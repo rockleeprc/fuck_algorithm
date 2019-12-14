@@ -1,6 +1,6 @@
 package com.leetcode;
 
-public class LinkedLeetCode {
+public class LinkLeet {
     /**
      * 237. 删除链表中的节点
      * 请编写一个函数，使其可以删除某个链表中给定的（非末尾）节点，你将只被给定要求被删除的节点。
@@ -62,7 +62,7 @@ public class LinkedLeetCode {
         node1.next = node2;
         node2.next = node3;
 
-        LinkedLeetCode code = new LinkedLeetCode();
+        LinkLeet code = new LinkLeet();
         ListNode newHead = code.reverseList(node1);
 
         while (newHead != null) {

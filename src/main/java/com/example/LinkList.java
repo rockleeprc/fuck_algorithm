@@ -1,8 +1,8 @@
 package com.example;
 
-public class LinkedList<E> {
+public class LinkList<E> {
     public static void main(String[] args) {
-        LinkedList<String> list = new LinkedList();
+        LinkList<String> list = new LinkList();
         list.add("C");
         list.add("D");
         System.out.println(list);
@@ -41,6 +41,7 @@ public class LinkedList<E> {
     }
 
     public void add(int index, E element) {
+        checkRangeForAdd(index);
         if (index == 0) {
             first = new Node<E>(element, first);
         } else {
@@ -51,6 +52,7 @@ public class LinkedList<E> {
     }
 
     private Node<E> node(int index) {
+        checkRange(index);
         Node node = first;
         for (int i = 0; i < index; i++) {
             node = first.next;
@@ -61,6 +63,10 @@ public class LinkedList<E> {
     private void delete(Node node) {
         node.element = node.element;
         node.next = node.next.next;
+    }
+
+    private void checkRangeForAdd(int index) {
+
     }
 
     private void checkRange(int index) {
