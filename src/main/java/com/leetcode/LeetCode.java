@@ -31,6 +31,20 @@ public class LeetCode {
             if (slow == fast) return true;
         }
         return false;
+        /*
+        ListNode node1 = new ListNode(1);
+        ListNode node2 = new ListNode(2);
+        ListNode node3 = new ListNode(3);
+
+        node1.next = node2;
+        node2.next = node3;
+        node3.next = node1;
+
+        LeetCode code = new LeetCode();
+        ListNode newHead = code.reverseList(node1);
+
+        System.out.println(code.hasCycle(node1));
+         */
     }
 
     /**
@@ -52,9 +66,7 @@ public class LeetCode {
         }
 
         return newHead;
-    }
-
-    public static void main(String[] args) {
+        /*
         ListNode node1 = new ListNode(1);
         ListNode node2 = new ListNode(2);
         ListNode node3 = new ListNode(3);
@@ -69,5 +81,10 @@ public class LeetCode {
             System.out.println(newHead.val);
             newHead = newHead.next;
         }
+         */
+    }
+
+    public static void main(String[] args) {
+
     }
 }
