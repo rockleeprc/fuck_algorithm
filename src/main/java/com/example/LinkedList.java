@@ -1,8 +1,8 @@
 package com.example;
 
-public class LinkList<E> {
+public class LinkedList<E> {
     public static void main(String[] args) {
-        LinkList<String> list = new LinkList();
+        LinkedList<String> list = new LinkedList();
         list.add("C");
         list.add("D");
         System.out.println(list);
@@ -51,6 +51,35 @@ public class LinkList<E> {
         size++;
     }
 
+    public E remove(int index) {
+        Node<E> node = first;
+        if (index == 0) {
+            first = first.next;
+        } else {
+            Node prev = node(index - 1);
+            node = prev.next;
+            prev.next = node.next;// prev.next = prev.next.next;
+        }
+        return node.element;
+    }
+
+    public int indexOf(E element) {
+        if (element == null) {
+            Node<E> node = first;
+            for (int i = 0; i < size; i++) {
+                if (node.element.equals(null)) return i;
+                node = node.next;
+            }
+        } else {
+            Node<E> node = first;
+            for (int i = 0; i < size; i++) {
+                if (element.equals(node.element)) return i;
+                node = node.next;
+            }
+        }
+        return -1;
+    }
+
     private Node<E> node(int index) {
         checkRange(index);
         Node node = first;
@@ -85,6 +114,12 @@ public class LinkList<E> {
             sb.append(node.element);
             node = node.next;
         }
+
+        /*
+        while (node != null) {
+            node = node.next;
+        }
+         */
         return sb.toString();
     }
 }

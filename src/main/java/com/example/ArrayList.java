@@ -29,7 +29,7 @@ public class ArrayList<E> {
     private int size;
     private E[] elements;
 
-    private static final int DEFAULT_CAPACITY = 2;
+    private static final int DEFAULT_CAPACITY = 10;
 
     public ArrayList() {
         this(DEFAULT_CAPACITY);
