@@ -7,6 +7,7 @@ public class SinglyLinkedList<E> {
         list.add("D");
         System.out.println(list);
         list.add(2, "B");
+        System.out.println(list);
         list.add(1, "b");
         System.out.println(list);
     }
@@ -84,19 +85,19 @@ public class SinglyLinkedList<E> {
         checkRange(index);
         Node node = first;
         for (int i = 0; i < index; i++) {
-            node = first.next;
+            node = node.next;
         }
         return node;
     }
 
     private void checkRangeForAdd(int index) {
-        if (index < 0 || index > index) {
+        if (index < 0 || index > size) {
             indexOutOfBoundException(index);
         }
     }
 
     private void checkRange(int index) {
-        if (index < 0 || index >= index) {
+        if (index < 0 || index >= size) {
             indexOutOfBoundException(index);
         }
     }
