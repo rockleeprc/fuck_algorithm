@@ -1,8 +1,8 @@
 package com.example;
 
-public class LinkedList<E> {
+public class SinglyLinkedList<E> {
     public static void main(String[] args) {
-        LinkedList<String> list = new LinkedList();
+        SinglyLinkedList<String> list = new SinglyLinkedList();
         list.add("C");
         list.add("D");
         System.out.println(list);
