@@ -56,12 +56,12 @@ public class DoublyLinkedList<E> {
 
     public void add(int index, E element) {
         if (index == size) {// last添加
-            Node<E> oldTail = last;
-            last = new Node<>(oldTail, element, null);
-            if (oldTail == null) {// 后继为null
+            Node<E> oldLast = last;
+            last = new Node<>(oldLast, element, null);
+            if (oldLast == null) {// 后继为null
                 first = last;
             } else {
-                oldTail.next = last;
+                oldLast.next = last;
             }
         } else {// first添加
             Node<E> next = node(index);
