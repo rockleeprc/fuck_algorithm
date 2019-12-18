@@ -3,7 +3,16 @@ package com.example;
 public class DoublyLinkedList<E> {
 
     public static void main(String[] args) {
-
+        DoublyLinkedList<String> linked = new DoublyLinkedList<>();
+        linked.add("A");
+        linked.add("B");
+        linked.add("D");
+        linked.add("C");
+        System.out.println(linked);
+        System.out.println("remove="+linked.remove(0));
+        System.out.println(linked);
+        System.out.println("remove="+linked.remove(2));
+        System.out.println(linked);
     }
 
 
@@ -27,31 +36,79 @@ public class DoublyLinkedList<E> {
             this.element = element;
             this.next = next;
         }
+
+        @Override
+        public String toString() {
+            return "Node{" +
+                    "element=" + element +
+                    ", prev=" + prev +
+                    ", next=" + next +
+                    '}';
+        }
     }
 
     public void add(E element) {
-        add(size++, element);
+        add(size, element);
     }
 
     public void add(int index, E element) {
-
+        if (index == 0) {
+            Node node = new Node(element, head);
+            node.next = head;
+            head = node;
+        } else {
+            Node<E> prev = node(index - 1);
+            Node<E> next = prev.next;
+            prev.next = new Node<>(element, next);
+        }
+        size++;
     }
 
     public E set(int index, E element) {
-
-        return null;
+        Node<E> node = node(index);
+        E oldValue = node.element;
+        node.element = element;
+        return oldValue;
     }
 
     public E remove(int index) {
-        return null;
+        E oldValue = null;
+        if (index == 0) {
+            oldValue = head.element;
+            head = head.next;
+        } else {
+            Node<E> prev = node(index - 1);
+            Node<E> node = prev.next;
+            oldValue = node.element;
+            prev.next = node.next;
+        }
+        return oldValue;
     }
 
-    private Node node(int index) {
+    public Node<E> node(int index) {
         Node<E> node = head;
-        for (int i = 1; i < size; i++) {
+        for (int i = 0; i < size; i++) {
             if (index == i) return node;
             node = node.next;
         }
         return node;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        Node node = head;
+        int index = 0;
+        sb.append("[");
+        while (node != null) {
+            if (index != 0) {
+                sb.append("\r\n");
+            }
+            sb.append(node);
+            node = node.next;
+            index++;
+        }
+        sb.append("]");
+        return sb.toString();
     }
 }
