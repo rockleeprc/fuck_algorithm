@@ -13,7 +13,7 @@ public class SinglyLinkedList<E> {
     }
 
     private int size;
-    private Node<E> head;
+    private Node<E> first;
 
     private static class Node<E> {
         E element;
@@ -27,7 +27,12 @@ public class SinglyLinkedList<E> {
 
     public void clear() {
         size = 0;
-        head = null;
+        first = null;
+    }
+
+    public E get(int index) {
+        checkRange(index);
+        return node(index).element;
     }
 
     public E set(int index, E element) {
@@ -44,7 +49,7 @@ public class SinglyLinkedList<E> {
     public void add(int index, E element) {
         checkRangeForAdd(index);
         if (index == 0) {
-            head = new Node<E>(element, head);
+            first = new Node<E>(element, first);
         } else {
             Node<E> prev = node(index - 1);
             prev.next = new Node<E>(element, prev.next);
@@ -53,26 +58,27 @@ public class SinglyLinkedList<E> {
     }
 
     public E remove(int index) {
-        Node<E> node = head;
+        Node<E> node = first;
         if (index == 0) {
-            head = head.next;
+            first = first.next;
         } else {
             Node prev = node(index - 1);
             node = prev.next;
             prev.next = node.next;// prev.next = prev.next.next;
         }
+        size--;
         return node.element;
     }
 
     public int indexOf(E element) {
         if (element == null) {
-            Node<E> node = head;
+            Node<E> node = first;
             for (int i = 0; i < size; i++) {
                 if (node.element.equals(null)) return i;
                 node = node.next;
             }
         } else {
-            Node<E> node = head;
+            Node<E> node = first;
             for (int i = 0; i < size; i++) {
                 if (element.equals(node.element)) return i;
                 node = node.next;
@@ -83,7 +89,7 @@ public class SinglyLinkedList<E> {
 
     private Node<E> node(int index) {
         checkRange(index);
-        Node node = head;
+        Node node = first;
         for (int i = 0; i < index; i++) {
             node = node.next;
         }
@@ -109,7 +115,7 @@ public class SinglyLinkedList<E> {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        Node node = head;
+        Node node = first;
         for (int i = 0; i < size; i++) {
             if (i != 0) sb.append(",");
             sb.append(node.element);

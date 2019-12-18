@@ -8,24 +8,27 @@ public class DoublyLinkedList<E> {
         linked.add("B");
         linked.add("D");
         linked.add("C");
+//        System.out.println(linked.size);
+//        System.out.println(linked.node(4));
+
+//        System.out.println(linked);
+//        linked.add(2, "b");
+//        System.out.println(linked);
+        System.out.println("remove=" + linked.remove(0));
         System.out.println(linked);
-        System.out.println("remove="+linked.remove(0));
-        System.out.println(linked);
-        System.out.println("remove="+linked.remove(2));
-        System.out.println(linked);
+//        System.out.println("remove=" + linked.remove(2));
+//        System.out.println(linked);
     }
 
-
     private int size;
-    private Node<E> head;
+    private Node<E> first;
+    private Node<E> last;
 
     private static class Node<E> {
         E element;
         Node<E> prev;
         Node<E> next;
 
-
-        @Deprecated
         public Node(E element, Node<E> next) {
             this.element = element;
             this.next = next;
@@ -41,8 +44,8 @@ public class DoublyLinkedList<E> {
         public String toString() {
             return "Node{" +
                     "element=" + element +
-                    ", prev=" + prev +
-                    ", next=" + next +
+                    //", prev=" + prev +
+                    //", next=" + next +
                     '}';
         }
     }
@@ -52,14 +55,24 @@ public class DoublyLinkedList<E> {
     }
 
     public void add(int index, E element) {
-        if (index == 0) {
-            Node node = new Node(element, head);
-            node.next = head;
-            head = node;
-        } else {
-            Node<E> prev = node(index - 1);
-            Node<E> next = prev.next;
-            prev.next = new Node<>(element, next);
+        if (index == size) {// last添加
+            Node<E> oldTail = last;
+            last = new Node<>(oldTail, element, null);
+            if (oldTail == null) {// 后继为null
+                first = last;
+            } else {
+                oldTail.next = last;
+            }
+        } else {// first添加
+            Node<E> next = node(index);
+            Node<E> prev = next.prev;
+            Node node = new Node(prev, element, next);
+            prev.next = node;
+            if (prev == null) {// 前驱为null
+                first = node;
+            } else {
+                prev.next = node;
+            }
         }
         size++;
     }
@@ -74,39 +87,43 @@ public class DoublyLinkedList<E> {
     public E remove(int index) {
         E oldValue = null;
         if (index == 0) {
-            oldValue = head.element;
-            head = head.next;
+            oldValue = first.element;
+            first = first.next;
         } else {
-            Node<E> prev = node(index - 1);
-            Node<E> node = prev.next;
+            Node<E> node = node(index);
             oldValue = node.element;
-            prev.next = node.next;
+            node.prev = node.next;
         }
+        size--;
         return oldValue;
     }
 
     public Node<E> node(int index) {
-        Node<E> node = head;
-        for (int i = 0; i < size; i++) {
-            if (index == i) return node;
-            node = node.next;
+        if (index < (index >> 1)) {
+            Node<E> node = first;
+            for (int i = 0; i < index; i++) {
+                node = node.next;
+            }
+            return node;
+        } else {
+            Node<E> node = last;
+            for (int i = size - 1; i > index; i--) {
+                node = node.prev;
+            }
+            return node;
         }
-        return node;
     }
+
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        Node node = head;
-        int index = 0;
         sb.append("[");
-        while (node != null) {
-            if (index != 0) {
-                sb.append("\r\n");
-            }
+        Node node = first;
+        for (int i = 0; i < size; i++) {
+            if (i != 0) sb.append("\r\n");
             sb.append(node);
             node = node.next;
-            index++;
         }
         sb.append("]");
         return sb.toString();
