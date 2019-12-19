@@ -63,12 +63,12 @@ public class DoublyLinkedList<E> {
             } else {
                 oldLast.next = last;
             }
-        } else {// first添加
+        } else {
             Node<E> next = node(index);
             Node<E> prev = next.prev;
             Node node = new Node(prev, element, next);
             prev.next = node;
-            if (prev == null) {// 前驱为null
+            if (prev == null) {// first添加 前驱为null
                 first = node;
             } else {
                 prev.next = node;
@@ -89,6 +89,7 @@ public class DoublyLinkedList<E> {
         if (index == 0) {
             oldValue = first.element;
             first = first.next;
+            first.prev = last;
         } else {
             Node<E> node = node(index);
             oldValue = node.element;
