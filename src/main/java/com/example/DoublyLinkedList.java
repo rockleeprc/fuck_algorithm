@@ -58,7 +58,7 @@ public class DoublyLinkedList<E> {
         if (index == size) {// last添加
             Node<E> oldLast = last;
             last = new Node<>(oldLast, element, null);
-            if (oldLast == null) {// 后继为null
+            if (oldLast == null) {// 链表添加的第一个元素
                 first = last;
             } else {
                 oldLast.next = last;
@@ -67,7 +67,7 @@ public class DoublyLinkedList<E> {
             Node<E> next = node(index);
             Node<E> prev = next.prev;
             Node node = new Node(prev, element, next);
-            prev.next = node;
+            next.prev = node;
             if (prev == null) {// first添加 前驱为null
                 first = node;
             } else {
@@ -85,16 +85,23 @@ public class DoublyLinkedList<E> {
     }
 
     public E remove(int index) {
-        E oldValue = null;
-        if (index == 0) {
-            oldValue = first.element;
-            first = first.next;
-            first.prev = last;
-        } else {
-            Node<E> node = node(index);
-            oldValue = node.element;
-            node.prev = node.next;
+        Node<E> node = node(index);
+        E oldValue = node.element;
+        Node<E> prev = node.prev;
+        Node<E> next = node.next;
+
+        if(prev==null){ // index = 0
+            first  = next;
+        }else{
+            prev.next = next;
         }
+
+        if(last==null){// index=size-1
+            last = prev;
+        }else{
+            next.prev = prev;
+        }
+
         size--;
         return oldValue;
     }
@@ -113,6 +120,12 @@ public class DoublyLinkedList<E> {
             }
             return node;
         }
+    }
+
+    public void clear() {
+        size = 0;
+        first = null;
+        last = null;
     }
 
 
