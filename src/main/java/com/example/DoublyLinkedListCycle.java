@@ -57,21 +57,23 @@ public class DoublyLinkedListCycle<E> {
     public void add(int index, E element) {
         if (index == size) {// last添加
             Node<E> oldLast = last;
-            last = new Node<>(oldLast, element, null);
+            last = new Node<>(oldLast, element, first);
             if (oldLast == null) {// 链表添加的第一个元素
                 first = last;
+                first.next = first;
+                first.prev = first;
             } else {
                 oldLast.next = last;
+                last.prev = last;
             }
         } else {
             Node<E> next = node(index);
             Node<E> prev = next.prev;
             Node node = new Node(prev, element, next);
             next.prev = node;
-            if (prev == null) {// first添加 前驱为null
+            prev.next = node;
+            if (next == first) {
                 first = node;
-            } else {
-                prev.next = node;
             }
         }
         size++;
@@ -90,15 +92,15 @@ public class DoublyLinkedListCycle<E> {
         Node<E> prev = node.prev;
         Node<E> next = node.next;
 
-        if(prev==null){ // index = 0
-            first  = next;
-        }else{
+        if (prev == null) { // index = 0
+            first = next;
+        } else {
             prev.next = next;
         }
 
-        if(last==null){// index=size-1
+        if (last == null) {// index=size-1
             last = prev;
-        }else{
+        } else {
             next.prev = prev;
         }
 
