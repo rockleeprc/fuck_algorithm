@@ -50,9 +50,10 @@ public class SinglyLinkedListCycle<E> {
     public void add(int index, E element) {
         checkRangeForAdd(index);
         if (index == 0) {
-            first = new Node<E>(element, first);
+            Node<E> newfirst = new Node<E>(element, first);
             last = size == 0 ? first : node(index - 1);
-            last.next = first;
+            last.next = newfirst;
+            first = newfirst;
         } else {
             Node<E> prev = node(index - 1);
             prev.next = new Node<E>(element, prev.next);
