@@ -63,7 +63,7 @@ public class LinkedList1<E> {
     }
 
     public static void main(String[] args) {
-        LinkedList1<String> list = new LinkedList1();
+        LinkedList1<String> list = new LinkedList1<>();
         list.add("a");
         list.add("c");
         list.add("d");
