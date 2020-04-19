@@ -1,9 +1,9 @@
-package com.example;
+package com.example.linkedlist;
 
-public class DoublyLinkedListCycle<E> {
+public class DoublyLinkedList<E> {
 
     public static void main(String[] args) {
-        DoublyLinkedListCycle<String> linked = new DoublyLinkedListCycle<>();
+        DoublyLinkedList<String> linked = new DoublyLinkedList<>();
         linked.add("A");
         linked.add("B");
         linked.add("D");
@@ -57,23 +57,21 @@ public class DoublyLinkedListCycle<E> {
     public void add(int index, E element) {
         if (index == size) {// last添加
             Node<E> oldLast = last;
-            last = new Node<>(oldLast, element, first);
+            last = new Node<>(oldLast, element, null);
             if (oldLast == null) {// 链表添加的第一个元素
                 first = last;
-                first.next = first;
-                first.prev = first;
             } else {
                 oldLast.next = last;
-                last.prev = last;
             }
         } else {
             Node<E> next = node(index);
             Node<E> prev = next.prev;
             Node node = new Node(prev, element, next);
             next.prev = node;
-            prev.next = node;
-            if (next == first) {
+            if (prev == null) {// first添加 前驱为null
                 first = node;
+            } else {
+                prev.next = node;
             }
         }
         size++;
@@ -92,15 +90,15 @@ public class DoublyLinkedListCycle<E> {
         Node<E> prev = node.prev;
         Node<E> next = node.next;
 
-        if (prev == null) { // index = 0
-            first = next;
-        } else {
+        if(prev==null){ // index = 0
+            first  = next;
+        }else{
             prev.next = next;
         }
 
-        if (last == null) {// index=size-1
+        if(last==null){// index=size-1
             last = prev;
-        } else {
+        }else{
             next.prev = prev;
         }
 
@@ -111,12 +109,14 @@ public class DoublyLinkedListCycle<E> {
     public Node<E> node(int index) {
         if (index < (index >> 1)) {
             Node<E> node = first;
+            // 从first遍历时找到index前一个节点
             for (int i = 0; i < index; i++) {
                 node = node.next;
             }
             return node;
         } else {
             Node<E> node = last;
+            // 从last遍历时找到index后一个节点
             for (int i = size - 1; i > index; i--) {
                 node = node.prev;
             }

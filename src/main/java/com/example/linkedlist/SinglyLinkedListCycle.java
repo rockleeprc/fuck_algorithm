@@ -1,8 +1,8 @@
-package com.example;
+package com.example.linkedlist;
 
-public class SinglyLinkedList<E> {
+public class SinglyLinkedListCycle<E> {
     public static void main(String[] args) {
-        SinglyLinkedList<String> list = new SinglyLinkedList();
+        SinglyLinkedListCycle<String> list = new SinglyLinkedListCycle();
         list.add("C");
         list.add("D");
         System.out.println(list);
@@ -14,6 +14,7 @@ public class SinglyLinkedList<E> {
 
     private int size;
     private Node<E> first;
+    private Node<E> last;
 
     private static class Node<E> {
         E element;
@@ -49,7 +50,10 @@ public class SinglyLinkedList<E> {
     public void add(int index, E element) {
         checkRangeForAdd(index);
         if (index == 0) {
-            first = new Node<E>(element, first);
+            Node<E> newfirst = new Node<E>(element, first);
+            last = size == 0 ? first : node(index - 1);
+            last.next = newfirst;
+            first = newfirst;
         } else {
             Node<E> prev = node(index - 1);
             prev.next = new Node<E>(element, prev.next);

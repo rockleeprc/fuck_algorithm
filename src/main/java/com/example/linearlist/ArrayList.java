@@ -1,32 +1,36 @@
-package com.example;
+package com.example.linearlist;
 
+
+import com.example.AbstractList;
 
 import java.util.Arrays;
 
 /**
  * 动态数组
  */
-public class ArrayList<E> {
+public class ArrayList<E> extends AbstractList<E> {
 
     public static void main(String[] args) {
-        ArrayList<Integer> list = new ArrayList();
+        ArrayList<Integer> list = new ArrayList<>();
         list.add(1);
         list.add(2);
         list.add(3);
         list.add(4);
         list.add(5);
         list.add(6);
-        System.out.println(list);
+        System.out.println(list.size == 6);
 
         int old = list.remove(5);
-        System.out.println(old);
+        System.out.println(list.get(4) == 5);
 
         list.add(0, 22);
-        System.out.println(list);
+        System.out.println(list.get(0) == 22);
+
+        System.out.println(list.indexOf(99) == -1);
+        System.out.println(list.indexOf(22) == 0);
     }
 
 
-    private int size;
     private E[] elements;
 
     private static final int DEFAULT_CAPACITY = 10;
@@ -75,6 +79,8 @@ public class ArrayList<E> {
             elements[i - 1] = elements[i];
         }
         elements[--size] = null;
+
+        // TODO 缩容
         return old;
     }
 
@@ -148,20 +154,4 @@ public class ArrayList<E> {
         System.out.println("oldCapacity=" + oldCapacity + ",newCapacity" + newCapacity);
     }
 
-    private void rangeCheckForAdd(int index) {
-        if (index < 0 || index > size) {
-            indexOutOfBoundException(index);
-        }
-
-    }
-
-    private void rangeCheck(int index) {
-        if (index < 0 || index >= size) {
-            indexOutOfBoundException(index);
-        }
-    }
-
-    private void indexOutOfBoundException(int index) {
-        throw new IndexOutOfBoundsException("index = " + index + ",size=" + size);
-    }
 }
