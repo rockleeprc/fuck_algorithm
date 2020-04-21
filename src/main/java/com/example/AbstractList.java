@@ -3,13 +3,13 @@ package com.example;
 public abstract class AbstractList<E> implements List<E> {
     protected int size;
 
-    protected void rangeCheckForAdd(int index) {
+    protected void checkRangeForAdd(int index) {
         if (index < 0 || index > size) {
             indexOutOfBoundException(index);
         }
     }
 
-    protected void rangeCheck(int index) {
+    protected void checkRange(int index) {
         if (index < 0 || index >= size) {
             indexOutOfBoundException(index);
         }

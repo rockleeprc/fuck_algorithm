@@ -13,7 +13,7 @@ public interface List<E> {
 
     int indexOf(E element);
 
-    boolean constains(E element);
+    boolean contains(E element);
 
     void clear();
 

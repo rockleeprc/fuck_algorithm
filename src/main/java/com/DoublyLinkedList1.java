@@ -1,11 +1,11 @@
-package com.example.linkedlist;
+package com;
 
 import com.example.AbstractList;
 
-public class DoublyLinkedList<E> extends AbstractList<E> {
+public class DoublyLinkedList1<E> extends AbstractList<E> {
 
     public static void main(String[] args) {
-        DoublyLinkedList<Integer> list = new DoublyLinkedList<>();
+        DoublyLinkedList1<Integer> list = new DoublyLinkedList1<>();
         list.add(1);
         list.add(2);
         list.add(3);
@@ -37,55 +37,31 @@ public class DoublyLinkedList<E> extends AbstractList<E> {
 
     private static class Node<E> {
         E element;
-        Node<E> prev;
         Node<E> next;
-
-        public Node(E element, Node<E> next) {
-            this.element = element;
-            this.next = next;
-        }
+        Node<E> prev;
 
         public Node(Node<E> prev, E element, Node<E> next) {
             this.prev = prev;
             this.element = element;
             this.next = next;
         }
-
-        @Override
-        public String toString() {
-            return "Node{" +
-                    "element=" + element +
-                    //", prev=" + prev +
-                    //", next=" + next +
-                    '}';
-        }
     }
 
-    public void add(E element) {
-        add(size, element);
-    }
-
-    public void add(int index, E element) {
-        if (index == size) {// last添加
-            Node<E> oldLast = last;
-            last = new Node<>(oldLast, element, null);
-            if (oldLast == null) {// 链表添加的第一个元素
-                first = last;
-            } else {
-                oldLast.next = last;
+    public Node<E> node(int index) {
+        Node<E> node = null;
+        if (index < (index >> 1)) {// first -> idnex;
+            node = first;
+            for (int i = 0; i < index; i++) {
+                node = node.next;
             }
-        } else {
-            Node<E> next = node(index);
-            Node<E> prev = next.prev;
-            Node node = new Node(prev, element, next);
-            next.prev = node;
-            if (prev == null) {// first添加 前驱为null
-                first = node;
-            } else {
-                prev.next = node;
+        } else { // last -> index
+            node = last;
+            for (int i = size - 1; i > index; i--) {
+                node = node.prev;
             }
         }
-        size++;
+
+        return node;
     }
 
     @Override
@@ -104,6 +80,7 @@ public class DoublyLinkedList<E> extends AbstractList<E> {
         return node.element;
     }
 
+    @Override
     public E set(int index, E element) {
         Node<E> node = node(index);
         E oldValue = node.element;
@@ -111,26 +88,24 @@ public class DoublyLinkedList<E> extends AbstractList<E> {
         return oldValue;
     }
 
+    @Override
     public E remove(int index) {
         Node<E> node = node(index);
-        E oldValue = node.element;
         Node<E> prev = node.prev;
         Node<E> next = node.next;
 
-        if (prev == null) { // index = 0
+        if (prev == null) {
             first = next;
         } else {
             prev.next = next;
         }
-
-        if (next == null) {// index=size-1
+        if (next == null) {
             last = prev;
         } else {
             next.prev = prev;
         }
-
         size--;
-        return oldValue;
+        return node.element;
     }
 
     @Override
@@ -157,42 +132,39 @@ public class DoublyLinkedList<E> extends AbstractList<E> {
         return indexOf(element) != -1;
     }
 
-    public Node<E> node(int index) {
-        if (index < (index >> 1)) {
-            Node<E> node = first;
-            // 从first遍历时找到index前一个节点
-            for (int i = 0; i < index; i++) {
-                node = node.next;
-            }
-            return node;
-        } else {
-            Node<E> node = last;
-            // 从last遍历时找到index后一个节点
-            for (int i = size - 1; i > index; i--) {
-                node = node.prev;
-            }
-            return node;
-        }
-    }
-
+    @Override
     public void clear() {
         size = 0;
         first = null;
         last = null;
     }
 
+    @Override
+    public void add(E element) {
+        add(size, element);
+    }
 
     @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("[");
-        Node node = first;
-        for (int i = 0; i < size; i++) {
-            if (i != 0) sb.append(" ");
-            sb.append(node);
-            node = node.next;
+    public void add(int index, E element) {
+        if (index == size) {
+            Node<E> oldLast = last;
+            last = new Node(oldLast, element, null);
+            if (oldLast == null) { // size=0 没有元素
+                first = last;
+            } else { // 尾节点
+                oldLast.next = last;
+            }
+        } else {
+            Node<E> next = node(index);
+            Node<E> prev = next.prev;
+            Node<E> node = new Node(prev, element, next);
+            next.prev = node;
+            if (prev == null) { // first 添加
+                first = node;
+            } else {
+                prev.next = node;
+            }
         }
-        sb.append("]");
-        return sb.toString();
+        size++;
     }
 }

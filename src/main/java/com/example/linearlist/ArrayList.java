@@ -18,7 +18,8 @@ public class ArrayList<E> extends AbstractList<E> {
         list.add(4);
         list.add(5);
         list.add(6);
-        System.out.println(list.size == 6);
+
+        System.out.println(list.size() == 6);
 
         int old = list.remove(5);
         System.out.println(list.get(4) == 5);
@@ -28,6 +29,13 @@ public class ArrayList<E> extends AbstractList<E> {
 
         System.out.println(list.indexOf(99) == -1);
         System.out.println(list.indexOf(22) == 0);
+        System.out.println(list.contains(22));
+
+        list.add(null);
+        System.out.println(list.indexOf(null) == 6);
+
+        list.set(3, 88);
+        System.out.println(list.get(3) == 88);
     }
 
 
@@ -53,12 +61,12 @@ public class ArrayList<E> extends AbstractList<E> {
     }
 
     public E get(int index) {
-        rangeCheck(index);
+        checkRange(index);
         return elements[index];
     }
 
     public E set(int index, E element) {
-        rangeCheck(index);
+        checkRange(index);
 
         E oldValue = elements[index];
         elements[index] = element;
@@ -72,7 +80,7 @@ public class ArrayList<E> extends AbstractList<E> {
      * @return
      */
     public E remove(int index) {
-        rangeCheck(index);
+        checkRange(index);
 
         E old = elements[index];
         for (int i = index + 1; i < size; i++) {
@@ -101,7 +109,7 @@ public class ArrayList<E> extends AbstractList<E> {
         return -1;
     }
 
-    public boolean constains(E element) {
+    public boolean contains(E element) {
         return indexOf(element) != -1;
     }
 
@@ -123,7 +131,7 @@ public class ArrayList<E> extends AbstractList<E> {
      * @param element
      */
     public void add(int index, E element) {
-        rangeCheckForAdd(index);
+        checkRangeForAdd(index);
         ensureCapacity(size + 1);
 
         for (int i = size; i > index; i--) {

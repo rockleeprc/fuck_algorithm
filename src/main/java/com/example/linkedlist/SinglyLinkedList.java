@@ -1,18 +1,38 @@
 package com.example.linkedlist;
 
-public class SinglyLinkedList<E> {
+import com.example.AbstractList;
+
+public class SinglyLinkedList<E> extends AbstractList<E> {
     public static void main(String[] args) {
-        SinglyLinkedList<String> list = new SinglyLinkedList();
-        list.add("C");
-        list.add("D");
-        System.out.println(list);
-        list.add(2, "B");
-        System.out.println(list);
-        list.add(1, "b");
-        System.out.println(list);
+        SinglyLinkedList<Integer> list = new SinglyLinkedList<>();
+        list.add(1);
+        list.add(2);
+        list.add(3);
+        list.add(4);
+        list.add(5);
+        list.add(6);
+
+        System.out.println(list.size() == 6);
+
+        int old = list.remove(5);
+        System.out.println(list.get(4) == 5);
+
+        list.add(0, 22);
+        System.out.println(list.get(0) == 22);
+
+        System.out.println(list.indexOf(99) == -1);
+        System.out.println(list.indexOf(22) == 0);
+        System.out.println(list.contains(22));
+
+        list.add(null);
+        System.out.println(list.indexOf(null) == 6);
+
+        list.set(3, 88);
+        System.out.println(list.get(3) == 88);
+
+
     }
 
-    private int size;
     private Node<E> first;
 
     private static class Node<E> {
@@ -29,6 +49,18 @@ public class SinglyLinkedList<E> {
         size = 0;
         first = null;
     }
+
+    @Override
+    public int size() {
+        return size;
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return size == 0;
+    }
+
+
 
     public E get(int index) {
         checkRange(index);
@@ -74,7 +106,7 @@ public class SinglyLinkedList<E> {
         if (element == null) {
             Node<E> node = first;
             for (int i = 0; i < size; i++) {
-                if (node.element.equals(null)) return i;
+                if (node.element == null) return i;
                 node = node.next;
             }
         } else {
@@ -87,8 +119,13 @@ public class SinglyLinkedList<E> {
         return -1;
     }
 
+    @Override
+    public boolean contains(E element) {
+        return indexOf(element) != -1;
+    }
+
     private Node<E> node(int index) {
-        checkRange(index);
+        super.checkRange(index);
         Node node = first;
         for (int i = 0; i < index; i++) {
             node = node.next;
@@ -96,21 +133,18 @@ public class SinglyLinkedList<E> {
         return node;
     }
 
-    private void checkRangeForAdd(int index) {
-        if (index < 0 || index > size) {
-            indexOutOfBoundException(index);
-        }
-    }
+//    private void checkRangeForAdd(int index) {
+//        if (index < 0 || index > size) {
+//            indexOutOfBoundException(index);
+//        }
+//    }
+//
+//    private void checkRange(int index) {
+//        if (index < 0 || index >= size) {
+//            indexOutOfBoundException(index);
+//        }
+//    }
 
-    private void checkRange(int index) {
-        if (index < 0 || index >= size) {
-            indexOutOfBoundException(index);
-        }
-    }
-
-    private void indexOutOfBoundException(int index) {
-        throw new IndexOutOfBoundsException("index = " + index + ",size=" + size);
-    }
 
     @Override
     public String toString() {
