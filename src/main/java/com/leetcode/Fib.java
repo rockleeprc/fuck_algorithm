@@ -1,6 +1,5 @@
-package com.example;
+package com.leetcode;
 
-import java.util.Optional;
 import java.util.function.Function;
 
 /**

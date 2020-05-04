@@ -1,6 +1,6 @@
 package com;
 
-public class LinkedList1<E> {
+public class SingleLinkedList1<E> {
     private int size;
     private Node<E> first;
 
@@ -33,19 +33,19 @@ public class LinkedList1<E> {
     }
 
     public void remove(int index) {
-        if (index < 0 || index >= index) {
+        if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException("size=" + size + ",index=" + index);
         }
-
         if (index == 0) {
             first = first.next;
         } else {
             Node prev = node(index - 1);
             prev.next = prev.next.next;
         }
+        size--;
     }
 
-    private Node node(int index) {
+    public Node node(int index) {
         Node node = first;
         for (int i = 0; i < index; i++) {
             node = node.next;
@@ -93,7 +93,7 @@ public class LinkedList1<E> {
         list.add(4, "Q");
         System.out.println(list);
 //        list.remove(4);
-        list.update(0, "AA");
+        list.update(0,"AA");
         System.out.println(list);
     }
 }
