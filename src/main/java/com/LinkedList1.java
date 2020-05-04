@@ -93,7 +93,7 @@ public class LinkedList1<E> {
         list.add(4, "Q");
         System.out.println(list);
 //        list.remove(4);
-        list.update(0,"AA");
+        list.update(0, "AA");
         System.out.println(list);
     }
 }
