@@ -1,7 +1,7 @@
 package com;
 
 
-import java.util.concurrent.LinkedBlockingQueue;
+import java.lang.ref.WeakReference;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.LockSupport;
@@ -10,18 +10,29 @@ import java.util.concurrent.locks.ReentrantLock;
 public class TestThread {
     private static final ReentrantLock lock = new ReentrantLock();
     private static final Object monitor = new Object();
+    private static final ThreadLocal<String> LOCAL = new ThreadLocal<>();
     private static Thread t1;
     private static Thread t2;
+    private static int i = 3;
+    static final WeakReference<Person> weak = new WeakReference<Person>(new Person("liyan"));
 
     public static void main(String[] args) throws Exception {
-        LinkedBlockingQueue<Integer> queue = new LinkedBlockingQueue<>(3);
-        queue.add(1);
-        queue.add(2);
-        queue.add(3);
-        queue.put(4);
-        System.out.println(queue);
-        System.out.println(queue.poll());
-        System.out.println(queue);
+
+    }
+
+
+    private static class Person {
+
+        public Person(String name) {
+            this.name = name;
+        }
+
+        String name;
+
+        @Override
+        protected void finalize() throws Throwable {
+            System.out.println("GC");
+        }
     }
 
     public static void t4() {
