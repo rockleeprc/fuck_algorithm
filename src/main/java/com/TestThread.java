@@ -7,6 +7,10 @@ import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.LockSupport;
 import java.util.concurrent.locks.ReentrantLock;
 
+/**
+ * @see java-juc
+ */
+@Deprecated
 public class TestThread {
     private static final ReentrantLock lock = new ReentrantLock();
     private static final Object monitor = new Object();
