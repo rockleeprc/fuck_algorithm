@@ -61,7 +61,6 @@ public class SinglyLinkedList<E> extends AbstractList<E> {
     }
 
 
-
     public E get(int index) {
         checkRange(index);
         return node(index).element;
@@ -132,19 +131,6 @@ public class SinglyLinkedList<E> extends AbstractList<E> {
         }
         return node;
     }
-
-//    private void checkRangeForAdd(int index) {
-//        if (index < 0 || index > size) {
-//            indexOutOfBoundException(index);
-//        }
-//    }
-//
-//    private void checkRange(int index) {
-//        if (index < 0 || index >= size) {
-//            indexOutOfBoundException(index);
-//        }
-//    }
-
 
     @Override
     public String toString() {
