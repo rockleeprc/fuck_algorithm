@@ -74,6 +74,6 @@ public class _20_有效的括号 {
     }
 
     public static void main(String[] args) {
-        System.out.println(isValid3("{()}"));
+        System.out.println(isValid3("{([)}"));
     }
 }
