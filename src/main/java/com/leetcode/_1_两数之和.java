@@ -7,7 +7,7 @@ import java.util.Map;
 public class _1_两数之和 {
     public static void main(String[] args) {
         int[] nums = {2, 7, 11, 15};
-        int target = 13;
+        int target = 1;
         System.out.println(Arrays.toString(twoSum(nums, target)));
     }
 
@@ -17,6 +17,7 @@ public class _1_两数之和 {
             if (map.containsKey(target - nums[i])) {
                 return new int[]{map.get(target - nums[i]), i};
             }
+            // map<value,index>
             map.put(nums[i], i);
         }
         throw new IllegalArgumentException("No two sum solution");

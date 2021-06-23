@@ -36,6 +36,12 @@ public class _20_有效的括号 {
         return s.isEmpty();
     }
 
+    /**
+     * 栈
+     *
+     * @param s
+     * @return
+     */
     public static boolean isValid2(String s) {
         Stack<Character> stack = new Stack<Character>();
         for (char c : s.toCharArray()) {
@@ -51,6 +57,12 @@ public class _20_有效的括号 {
         return stack.isEmpty();
     }
 
+    /**
+     * 队列
+     *
+     * @param s
+     * @return
+     */
     public static boolean isValid3(String s) {
         Deque<Character> deque = new LinkedList<>();
         char ch;
@@ -74,6 +86,7 @@ public class _20_有效的括号 {
     }
 
     public static void main(String[] args) {
-        System.out.println(isValid3("{([)}"));
+        String s = "{()}";
+        System.out.println(isValid3(s));
     }
 }
