@@ -18,6 +18,7 @@ public class ArrayList<E> extends AbstractList<E> {
         list.add(4);
         list.add(5);
         list.add(6);
+        list.add(2, 33);
 
         System.out.println(list.size() == 6);
 
@@ -83,6 +84,7 @@ public class ArrayList<E> extends AbstractList<E> {
         checkRange(index);
 
         E old = elements[index];
+        // 从index+1位置开始向前移动一个位置
         for (int i = index + 1; i < size; i++) {
             elements[i - 1] = elements[i];
         }
@@ -131,9 +133,12 @@ public class ArrayList<E> extends AbstractList<E> {
      * @param element
      */
     public void add(int index, E element) {
+        // 不允许添加大于size的index
         checkRangeForAdd(index);
         ensureCapacity(size + 1);
 
+        // index>size时，index位置后的元素整体向后移动一个位置
+        // 从elements最后开始移动
         for (int i = size; i > index; i--) {
             elements[i] = elements[i - 1];
         }
