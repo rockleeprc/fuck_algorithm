@@ -3,35 +3,6 @@ package com.example.linkedlist;
 import com.example.AbstractList;
 
 public class SinglyLinkedList<E> extends AbstractList<E> {
-    public static void main(String[] args) {
-        SinglyLinkedList<Integer> list = new SinglyLinkedList<>();
-        list.add(1);
-        list.add(2);
-        list.add(3);
-        list.add(4);
-        list.add(5);
-        list.add(6);
-
-        System.out.println(list.size() == 6);
-
-        int old = list.remove(5);
-        System.out.println(list.get(4) == 5);
-
-        list.add(0, 22);
-        System.out.println(list.get(0) == 22);
-
-        System.out.println(list.indexOf(99) == -1);
-        System.out.println(list.indexOf(22) == 0);
-        System.out.println(list.contains(22));
-
-        list.add(null);
-        System.out.println(list.indexOf(null) == 6);
-
-        list.set(3, 88);
-        System.out.println(list.get(3) == 88);
-
-
-    }
 
     private Node<E> first;
 
@@ -73,22 +44,21 @@ public class SinglyLinkedList<E> extends AbstractList<E> {
         return oldValue;
     }
 
-    public void add(E element) {
-        add(size, element);
-    }
+
 
     public void add(int index, E element) {
         checkRangeForAdd(index);
         if (index == 0) {
-            first = new Node<E>(element, first);
+            first = new Node<>(element, first);
         } else {
             Node<E> prev = node(index - 1);
-            prev.next = new Node<E>(element, prev.next);
+            prev.next = new Node<>(element, prev.next);
         }
         size++;
     }
 
     public E remove(int index) {
+        checkRange(index);
         Node<E> node = first;
         if (index == 0) {
             first = first.next;
@@ -102,14 +72,13 @@ public class SinglyLinkedList<E> extends AbstractList<E> {
     }
 
     public int indexOf(E element) {
+        Node<E> node = first;
         if (element == null) {
-            Node<E> node = first;
             for (int i = 0; i < size; i++) {
                 if (node.element == null) return i;
                 node = node.next;
             }
         } else {
-            Node<E> node = first;
             for (int i = 0; i < size; i++) {
                 if (element.equals(node.element)) return i;
                 node = node.next;
@@ -124,7 +93,7 @@ public class SinglyLinkedList<E> extends AbstractList<E> {
     }
 
     private Node<E> node(int index) {
-        super.checkRange(index);
+        checkRange(index);
         Node node = first;
         for (int i = 0; i < index; i++) {
             node = node.next;
@@ -149,4 +118,35 @@ public class SinglyLinkedList<E> extends AbstractList<E> {
          */
         return sb.toString();
     }
+
+    public static void main(String[] args) {
+        SinglyLinkedList<Integer> list = new SinglyLinkedList<>();
+        list.add(1);
+        list.add(2);
+        list.add(3);
+        list.add(4);
+        list.add(5);
+        list.add(6);
+        list.add(null);
+        System.out.println(list.get(list.size - 1));
+
+        System.out.println(list.size() == 6);
+
+        int old = list.remove(5);
+        System.out.println(list.get(4) == 5);
+
+        list.add(0, 22);
+        System.out.println(list.get(0) == 22);
+
+        System.out.println(list.indexOf(99) == -1);
+        System.out.println(list.indexOf(22) == 0);
+        System.out.println(list.contains(22));
+
+        list.add(null);
+        System.out.println(list.indexOf(null) == 6);
+
+        list.set(3, 88);
+        System.out.println(list.get(3) == 88);
+    }
+
 }

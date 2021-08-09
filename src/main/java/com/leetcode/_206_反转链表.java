@@ -9,11 +9,16 @@ public class _206_反转链表 {
      * @return
      */
     public static ListNode reverseList1(ListNode head) {
-        if (head == null || head.next == null) return head;
+        // head为null、链表中只有一个元素
+        if (head == null || head.next == null)
+            return head;
         ListNode newHead = reverseList1(head.next);
-        // 1 2
-        // newHead = 2  head = 1
-        head.next.next = head; // 2.next = 1
+        /*
+            原始链表：node1 node2
+            方法内变量：newHead = node2  head = node1
+            当前node.next.next指向当前node
+         */
+        head.next.next = head; // node2.next = node1
         head.next = null;
         return newHead;
     }
@@ -26,13 +31,12 @@ public class _206_反转链表 {
      */
     public static ListNode reverseList2(ListNode head) {
         if (head == null || head.next == null) return head;
-        // 1 2
         ListNode newHead = null;
         while (head != null) {
-            ListNode tmp = head.next; // tmp = 2(1.next)    tmp = null
-            head.next = newHead; // 1.next(2) = null
-            newHead = head; // newHead = 1
-            head = tmp; // head = 2
+            ListNode tmp = head.next; // tmp = node2(node1.next)
+            head.next = newHead; // node1.next = null
+            newHead = head; // newHead = node1
+            head = tmp; // head = node2
         }
 
         return newHead;

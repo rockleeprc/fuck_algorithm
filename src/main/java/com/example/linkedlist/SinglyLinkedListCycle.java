@@ -62,6 +62,7 @@ public class SinglyLinkedListCycle<E> {
     }
 
     public E remove(int index) {
+        checkRange(index);
         Node<E> node = first;
         if (index == 0) {
             first = first.next;

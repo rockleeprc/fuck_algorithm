@@ -61,9 +61,6 @@ public class DoublyLinkedList<E> extends AbstractList<E> {
         }
     }
 
-    public void add(E element) {
-        add(size, element);
-    }
 
     public void add(int index, E element) {
         if (index == size) {// last添加

@@ -8,22 +8,22 @@ public class _141_环形链表 {
      * @return
      */
     public static boolean hasCycle(ListNode head) {
-        if (head == null || head.next == null) return false;
+        // 链表为空
+        if (head == null || head.next == null)
+            return false;
 
         ListNode slow = head;
         ListNode fast = head.next;
-        while (fast != null && fast.next != null) {
-            slow = slow.next;// 慢指针一步
-            fast = fast.next.next;// 快指针两步
+        while (fast != null && fast.next != null) { // 链表遍历技术，快慢指针还没有相遇
+            slow = slow.next; // 慢指针一步
+            fast = fast.next.next; // 快指针两步
 
             // 快慢指针相遇
-            if (slow == fast) return true;
+            if (slow == fast)
+                return true;
         }
-        // fast==null 无环
+        // 无环
         return false;
-        /*
-
-         */
     }
 
     public static void main(String[] args) {

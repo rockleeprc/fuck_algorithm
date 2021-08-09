@@ -10,36 +10,6 @@ import java.util.Arrays;
  */
 public class ArrayList<E> extends AbstractList<E> {
 
-    public static void main(String[] args) {
-        ArrayList<Integer> list = new ArrayList<>();
-        list.add(1);
-        list.add(2);
-        list.add(3);
-        list.add(4);
-        list.add(5);
-        list.add(6);
-        list.add(2, 33);
-
-        System.out.println(list.size() == 6);
-
-        int old = list.remove(5);
-        System.out.println(list.get(4) == 5);
-
-        list.add(0, 22);
-        System.out.println(list.get(0) == 22);
-
-        System.out.println(list.indexOf(99) == -1);
-        System.out.println(list.indexOf(22) == 0);
-        System.out.println(list.contains(22));
-
-        list.add(null);
-        System.out.println(list.indexOf(null) == 6);
-
-        list.set(3, 88);
-        System.out.println(list.get(3) == 88);
-    }
-
-
     private E[] elements;
 
     private static final int DEFAULT_CAPACITY = 10;
@@ -50,6 +20,7 @@ public class ArrayList<E> extends AbstractList<E> {
 
     public ArrayList(int capacity) {
         capacity = (capacity <= DEFAULT_CAPACITY) ? DEFAULT_CAPACITY : capacity;
+        // 用所有对象的父类
         elements = (E[]) new Object[capacity];
     }
 
@@ -88,6 +59,7 @@ public class ArrayList<E> extends AbstractList<E> {
         for (int i = index + 1; i < size; i++) {
             elements[i - 1] = elements[i];
         }
+        // 删除最后一个元素，修改size值
         elements[--size] = null;
 
         // TODO 缩容
@@ -133,7 +105,7 @@ public class ArrayList<E> extends AbstractList<E> {
      * @param element
      */
     public void add(int index, E element) {
-        // 不允许添加大于size的index
+        // 不允许添加大于size的index，但可以添加index=size的值
         checkRangeForAdd(index);
         ensureCapacity(size + 1);
 
@@ -142,6 +114,7 @@ public class ArrayList<E> extends AbstractList<E> {
         for (int i = size; i > index; i--) {
             elements[i] = elements[i - 1];
         }
+        // 添加新元素，修改size值
         elements[index] = element;
         size++;
     }
@@ -158,6 +131,7 @@ public class ArrayList<E> extends AbstractList<E> {
         int oldCapacity = elements.length;
         if (oldCapacity > capacity) return;
 
+        // capacity+(capacity/2)，扩容1.5倍
         int newCapacity = oldCapacity + (oldCapacity >> 1);
         E[] newElements = (E[]) new Object[newCapacity];
         for (int i = 0; i < size; i++) {
@@ -167,4 +141,33 @@ public class ArrayList<E> extends AbstractList<E> {
         System.out.println("oldCapacity=" + oldCapacity + ",newCapacity" + newCapacity);
     }
 
+
+    public static void main(String[] args) {
+        ArrayList<Integer> list = new ArrayList<>();
+        list.add(1);
+        list.add(2);
+        list.add(3);
+        list.add(4);
+        list.add(5);
+        list.add(6);
+        list.add(2, 33);
+
+        System.out.println(list.size() == 6);
+
+        int old = list.remove(5);
+        System.out.println(list.get(4) == 5);
+
+        list.add(0, 22);
+        System.out.println(list.get(0) == 22);
+
+        System.out.println(list.indexOf(99) == -1);
+        System.out.println(list.indexOf(22) == 0);
+        System.out.println(list.contains(22));
+
+        list.add(null);
+        System.out.println(list.indexOf(null) == 6);
+
+        list.set(3, 88);
+        System.out.println(list.get(3) == 88);
+    }
 }
