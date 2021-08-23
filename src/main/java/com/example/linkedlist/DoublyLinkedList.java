@@ -3,35 +3,6 @@ package com.example.linkedlist;
 import com.example.AbstractList;
 
 public class DoublyLinkedList<E> extends AbstractList<E> {
-
-    public static void main(String[] args) {
-        DoublyLinkedList<Integer> list = new DoublyLinkedList<>();
-        list.add(1);
-        list.add(2);
-        list.add(3);
-        list.add(4);
-        list.add(5);
-        list.add(6);
-
-        System.out.println(list.size() == 6);
-
-        int old = list.remove(5);
-        System.out.println(list.get(4) == 5);
-
-        list.add(0, 22);
-        System.out.println(list.get(0) == 22);
-
-        System.out.println(list.indexOf(99) == -1);
-        System.out.println(list.indexOf(22) == 0);
-        System.out.println(list.contains(22));
-
-        list.add(null);
-        System.out.println(list.indexOf(null) == 6);
-
-        list.set(3, 88);
-        System.out.println(list.get(3) == 88);
-    }
-
     private Node<E> first;
     private Node<E> last;
 
@@ -63,7 +34,8 @@ public class DoublyLinkedList<E> extends AbstractList<E> {
 
 
     public void add(int index, E element) {
-        if (index == size) {// last添加
+        // 尾部添加元素
+        if (index == size) {
             Node<E> oldLast = last;
             last = new Node<>(oldLast, element, null);
             if (oldLast == null) {// 链表添加的第一个元素
@@ -76,7 +48,8 @@ public class DoublyLinkedList<E> extends AbstractList<E> {
             Node<E> prev = next.prev;
             Node node = new Node(prev, element, next);
             next.prev = node;
-            if (prev == null) {// first添加 前驱为null
+            // 头部添加元素
+            if (prev == null) {
                 first = node;
             } else {
                 prev.next = node;
@@ -155,21 +128,22 @@ public class DoublyLinkedList<E> extends AbstractList<E> {
     }
 
     public Node<E> node(int index) {
+        Node<E> node;
+        // 为了统一，遍历时 head < index > (size -1)
         if (index < (index >> 1)) {
-            Node<E> node = first;
+            node = first;
             // 从first遍历时找到index前一个节点
             for (int i = 0; i < index; i++) {
                 node = node.next;
             }
-            return node;
         } else {
-            Node<E> node = last;
+            node = last;
             // 从last遍历时找到index后一个节点
             for (int i = size - 1; i > index; i--) {
                 node = node.prev;
             }
-            return node;
         }
+        return node;
     }
 
     public void clear() {
@@ -191,5 +165,34 @@ public class DoublyLinkedList<E> extends AbstractList<E> {
         }
         sb.append("]");
         return sb.toString();
+    }
+
+
+    public static void main(String[] args) {
+        DoublyLinkedList<Integer> list = new DoublyLinkedList<>();
+        list.add(1);
+        list.add(2);
+        list.add(3);
+        list.add(4);
+        list.add(5);
+        list.add(6);
+
+        System.out.println(list.size() == 6);
+
+        int old = list.remove(5);
+        System.out.println(list.get(4) == 5);
+
+        list.add(0, 22);
+        System.out.println(list.get(0) == 22);
+
+        System.out.println(list.indexOf(99) == -1);
+        System.out.println(list.indexOf(22) == 0);
+        System.out.println(list.contains(22));
+
+        list.add(null);
+        System.out.println(list.indexOf(null) == 6);
+
+        list.set(3, 88);
+        System.out.println(list.get(3) == 88);
     }
 }

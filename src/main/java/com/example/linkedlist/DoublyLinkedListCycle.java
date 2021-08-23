@@ -2,24 +2,6 @@ package com.example.linkedlist;
 
 public class DoublyLinkedListCycle<E> {
 
-    public static void main(String[] args) {
-        DoublyLinkedListCycle<String> linked = new DoublyLinkedListCycle<>();
-        linked.add("A");
-        linked.add("B");
-        linked.add("D");
-        linked.add("C");
-//        System.out.println(linked.size);
-//        System.out.println(linked.node(4));
-
-//        System.out.println(linked);
-//        linked.add(2, "b");
-//        System.out.println(linked);
-        System.out.println("remove=" + linked.remove(0));
-        System.out.println(linked);
-//        System.out.println("remove=" + linked.remove(2));
-//        System.out.println(linked);
-    }
-
     private int size;
     private Node<E> first;
     private Node<E> last;
@@ -64,7 +46,7 @@ public class DoublyLinkedListCycle<E> {
                 first.prev = first;
             } else {
                 oldLast.next = last;
-                last.prev = last;
+                first.prev = last;
             }
         } else {
             Node<E> next = node(index);
@@ -72,7 +54,7 @@ public class DoublyLinkedListCycle<E> {
             Node node = new Node(prev, element, next);
             next.prev = node;
             prev.next = node;
-            if (next == first) {
+            if (next == first) { // index==0;
                 first = node;
             }
         }
@@ -87,25 +69,27 @@ public class DoublyLinkedListCycle<E> {
     }
 
     public E remove(int index) {
-        Node<E> node = node(index);
-        E oldValue = node.element;
-        Node<E> prev = node.prev;
-        Node<E> next = node.next;
-
-        if (prev == null) { // index = 0
-            first = next;
+        Node<E> node = first;
+        if (size == 1) {
+            first = null;
+            last = null;
         } else {
+            node = node(index);
+            Node<E> prev = node.prev;
+            Node<E> next = node.next;
             prev.next = next;
-        }
-
-        if (last == null) {// index=size-1
-            last = prev;
-        } else {
             next.prev = prev;
-        }
 
+            if (node == first) { // index = 0
+                first = next;
+            }
+
+            if (node == last) {// index=size-1
+                last = prev;
+            }
+        }
         size--;
-        return oldValue;
+        return node.element;
     }
 
     public Node<E> node(int index) {
@@ -137,11 +121,31 @@ public class DoublyLinkedListCycle<E> {
         sb.append("[");
         Node node = first;
         for (int i = 0; i < size; i++) {
-            if (i != 0) sb.append("\r\n");
+            if (i != 0) sb.append(",");
             sb.append(node);
             node = node.next;
         }
         sb.append("]");
         return sb.toString();
+    }
+
+    public static void main(String[] args) {
+        DoublyLinkedListCycle<String> list = new DoublyLinkedListCycle<>();
+        list.add("A");
+        list.remove(0);
+        list.add("B");
+        list.add("D");
+        list.add("C");
+        System.out.println(list);
+        System.out.println(list.size);
+        System.out.println(list.node(1));
+
+//        System.out.println(list);
+//        list.add(2, "b");
+//        System.out.println(list);
+//        System.out.println("remove=" + list.remove(0));
+//        System.out.println(list);
+//        System.out.println("remove=" + list.remove(2));
+//        System.out.println(list);
     }
 }

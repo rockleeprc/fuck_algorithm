@@ -62,9 +62,10 @@ public class ArrayList<E> extends AbstractList<E> {
         // 删除最后一个元素，修改size值
         elements[--size] = null;
 
-        // TODO 缩容
+        trimCapacity();
         return old;
     }
+
 
     public int indexOf(E element) {
         if (element == null) {
@@ -138,36 +139,32 @@ public class ArrayList<E> extends AbstractList<E> {
             newElements[i] = elements[i];
         }
         elements = newElements;
-        System.out.println("oldCapacity=" + oldCapacity + ",newCapacity" + newCapacity);
+        System.out.println("扩容：oldCapacity=" + oldCapacity + ",newCapacity" + newCapacity);
+    }
+
+    private void trimCapacity() {
+        int newCapacity = elements.length >> 1;
+        // 不做处理
+        if (size >= newCapacity || size <= DEFAULT_CAPACITY) return;
+
+        E[] newElements = (E[]) new Object[newCapacity];
+        for (int i = 0; i < size; i++) {
+            newElements[i] = elements[i];
+        }
+        System.out.println("缩容：oldCapacity=" + elements.length + ",newCapacity" + newCapacity);
+        elements = newElements;
     }
 
 
     public static void main(String[] args) {
         ArrayList<Integer> list = new ArrayList<>();
-        list.add(1);
-        list.add(2);
-        list.add(3);
-        list.add(4);
-        list.add(5);
-        list.add(6);
-        list.add(2, 33);
+        for (int i = 0; i < 50; i++) {
+            list.add(i);
+        }
 
-        System.out.println(list.size() == 6);
-
-        int old = list.remove(5);
-        System.out.println(list.get(4) == 5);
-
-        list.add(0, 22);
-        System.out.println(list.get(0) == 22);
-
-        System.out.println(list.indexOf(99) == -1);
-        System.out.println(list.indexOf(22) == 0);
-        System.out.println(list.contains(22));
-
-        list.add(null);
-        System.out.println(list.indexOf(null) == 6);
-
-        list.set(3, 88);
-        System.out.println(list.get(3) == 88);
+        for (int i = 0; i < 50; i++) {
+            list.remove(0);
+        }
+        System.out.println(list);
     }
 }

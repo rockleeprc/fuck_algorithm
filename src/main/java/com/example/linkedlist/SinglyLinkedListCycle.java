@@ -1,16 +1,7 @@
 package com.example.linkedlist;
 
 public class SinglyLinkedListCycle<E> {
-    public static void main(String[] args) {
-        SinglyLinkedListCycle<String> list = new SinglyLinkedListCycle();
-        list.add("C");
-        list.add("D");
-        System.out.println(list);
-        list.add(2, "B");
-        System.out.println(list);
-        list.add(1, "b");
-        System.out.println(list);
-    }
+
 
     private int size;
     private Node<E> first;
@@ -50,10 +41,10 @@ public class SinglyLinkedListCycle<E> {
     public void add(int index, E element) {
         checkRangeForAdd(index);
         if (index == 0) {
-            Node<E> newfirst = new Node<E>(element, first);
-            last = size == 0 ? first : node(index - 1);
-            last.next = newfirst;
-            first = newfirst;
+            Node<E> newFirst = new Node<>(element, first);
+            Node<E> last = size == 0 ? newFirst : node(size - 1);
+            last.next = newFirst;
+            first = newFirst;
         } else {
             Node<E> prev = node(index - 1);
             prev.next = new Node<E>(element, prev.next);
@@ -133,5 +124,17 @@ public class SinglyLinkedListCycle<E> {
         }
          */
         return sb.toString();
+    }
+
+    public static void main(String[] args) {
+        SinglyLinkedListCycle<String> list = new SinglyLinkedListCycle();
+        list.add("C");
+        list.add("D");
+        System.out.println(list);
+        list.add(2, "B");
+        System.out.println(list);
+        list.add(1, "b");
+        list.remove(0);
+        System.out.println(list);
     }
 }
