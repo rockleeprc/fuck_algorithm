@@ -12,13 +12,13 @@ public class _20_有效的括号 {
      * @return
      */
     public static boolean isValid1(String s) {
-        while (s.contains("{}")
-                || s.contains("()")
-                || s.contains("[]")) {
+        while (s.contains("{}") || s.contains("()") || s.contains("[]")) {
+            // 匹配的字符替换为空
             s = s.replace("{}", "");
             s = s.replace("()", "");
             s = s.replace("[]", "");
         }
+        // 只要s为空，都能匹配括号
         return s.isEmpty();
     }
 
@@ -31,16 +31,14 @@ public class _20_有效的括号 {
     public static boolean isValid2(String s) {
         Stack<Character> stack = new Stack<Character>();
         for (char c : s.toCharArray()) {
-            if (c == '(')
-                stack.push(')');
-            else if (c == '[')
-                stack.push(']');
-            else if (c == '{')
-                stack.push('}');
-            else if (stack.isEmpty() || c != stack.pop())
+            // 左字符：push
+            if (c == '(' || c == '[' || c == '{')
+                stack.push(c);
+            else if (stack.isEmpty() || c != stack.pop()) // 右字符：pop比较、栈为空 不匹配
                 return false;
         }
-        return stack.isEmpty();
+        System.out.println("xx");
+        return stack.isEmpty();// 栈不为空 不匹配  例如：()[
     }
 
     /**
@@ -63,7 +61,7 @@ public class _20_有效的括号 {
                 deque.push(']');
             } else if (deque.isEmpty() || deque.peek() != ch) {
                 return false;
-            } else {//如果是右括号判断是否和栈顶元素匹配
+            } else {
                 deque.pop();
             }
         }
@@ -72,7 +70,7 @@ public class _20_有效的括号 {
     }
 
     public static void main(String[] args) {
-        String s = "{()}";
-        System.out.println(isValid3(s));
+        String s = "{{(){)}";
+        System.out.println(isValid2(s));
     }
 }
