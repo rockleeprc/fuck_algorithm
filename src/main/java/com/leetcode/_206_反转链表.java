@@ -45,16 +45,30 @@ public class _206_反转链表 {
     public static void main(String[] args) {
         ListNode node1 = new ListNode(1);
         ListNode node2 = new ListNode(2);
-//        ListNode node3 = new ListNode(3);
+        ListNode node3 = new ListNode(3);
 
         node1.next = node2;
-//        node2.next = node3;
+        node2.next = node3;
 
-        ListNode newHead = reverseList2(node1);
+        ListNode newHead = reverses(node1);
 
         while (newHead != null) {
             System.out.println(newHead.val);
             newHead = newHead.next;
         }
+    }
+
+    public static ListNode reverses(ListNode head) {
+        if (head == null || head.next == null) return head;
+
+        ListNode newHead = null;
+        while (head != null) {
+            ListNode headNext = head.next;
+            head.next = newHead;
+            newHead = head;
+            head = headNext;
+        }
+
+        return newHead;
     }
 }

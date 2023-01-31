@@ -9,6 +9,7 @@ public class ListNode {
         next = null;
     }
 
+
     @Override
     public String toString() {
         return "ListNode{" +
