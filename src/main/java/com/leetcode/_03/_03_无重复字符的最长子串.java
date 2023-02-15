@@ -11,7 +11,7 @@ public class _03_无重复字符的最长子串 {
         System.out.println(lengthOfLongestSubstring(s));
     }
 
-    public static int lengthOfLongestSubstring(String s) {
+    public static int lengthOfLongestSubstring2(String s) {
         // 哈希集合，记录每个字符是否出现过
         Set<Character> occ = new HashSet<>();
         int n = s.length();
@@ -33,7 +33,7 @@ public class _03_无重复字符的最长子串 {
         return ans;
     }
 
-    public static int lengthOfLongestSubstring2(String s) {
+    public static int lengthOfLongestSubstring(String s) {
         HashMap<Character, Integer> map = new HashMap<>();
         int max = 0, start = 0;
         for (int end = 0; end < s.length(); end++) {
