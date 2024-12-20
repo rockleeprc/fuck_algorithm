@@ -1,4 +1,5 @@
-package com.leetcode;
+package com.leetcode._241;
+
 
 public class _141_环形链表 {
     /**
@@ -12,9 +13,12 @@ public class _141_环形链表 {
         if (head == null || head.next == null)
             return false;
 
+        // 初始状态，slow、fast相邻
         ListNode slow = head;
         ListNode fast = head.next;
-        while (fast != null && fast.next != null) { // 链表遍历技术，快慢指针还没有相遇
+
+        // fast到达链表tail结束循环
+        while (fast != null && fast.next != null) { // 链表遍历，快慢指针还没有相遇
             slow = slow.next; // 慢指针一步
             fast = fast.next.next; // 快指针两步
 

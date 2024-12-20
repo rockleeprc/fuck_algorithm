@@ -1,4 +1,5 @@
-package com.leetcode;
+package com.leetcode._237;
+
 
 /**
  * 1、单向链表，在不知道前驱节点的情况下删除当前节点

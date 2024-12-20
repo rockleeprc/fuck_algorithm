@@ -1,4 +1,4 @@
-package com.leetcode;
+package com.leetcode._232;
 
 import java.util.Stack;
 
@@ -18,6 +18,7 @@ public class _232_用栈实现队列 {
      * Push element x to the back of queue.
      */
     public void push(int x) {
+        // 直接对inStack push
         inStack.push(x);
     }
 
@@ -26,12 +27,12 @@ public class _232_用栈实现队列 {
      */
     public int pop() {
         if (outStack.isEmpty()) {
-            inStack2OutStack();
+            inStackToOutStaTock();
         }
         return outStack.pop();
     }
 
-    private void inStack2OutStack() {
+    private void inStackToOutStaTock() {
         while (!inStack.isEmpty()) {
             outStack.push(inStack.pop());
         }
@@ -42,8 +43,9 @@ public class _232_用栈实现队列 {
      */
     public int peek() {
         if (outStack.isEmpty()) {
-            inStack2OutStack();
+            inStackToOutStaTock();
         }
+        // 看一下队头元素，但不删除
         return outStack.peek();
     }
 
@@ -51,6 +53,7 @@ public class _232_用栈实现队列 {
      * Returns whether the queue is empty.
      */
     public boolean empty() {
+        // in、out栈都为空，队列才为空
         return inStack.isEmpty() && outStack.isEmpty();
     }
 

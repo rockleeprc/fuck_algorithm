@@ -1,8 +1,6 @@
-package com.leetcode;
+package com.leetcode._20;
 
-import java.util.Deque;
-import java.util.LinkedList;
-import java.util.Stack;
+import java.util.*;
 
 public class _20_有效的括号 {
     /**
@@ -34,12 +32,19 @@ public class _20_有效的括号 {
             // 左字符：push
             if (c == '(' || c == '[' || c == '{')
                 stack.push(c);
-            else if (stack.isEmpty() || c != stack.pop()) // 右字符：pop比较、栈为空 不匹配
+            else if (stack.isEmpty()) // )}]时，栈为空，不匹配
                 return false;
+            else {// 栈不为空时，右字符与pop比较
+                Character left = stack.pop();
+                if (left == '(' && c != ')') return false;
+                if (left == '{' && c != '}') return false;
+                if (left == '[' && c != ']') return false;
+            }
         }
-        System.out.println("xx");
-        return stack.isEmpty();// 栈不为空 不匹配  例如：()[
+        // char循环完，栈不为空 不匹配  例如：()[
+        return stack.isEmpty();
     }
+
 
     /**
      * 队列
@@ -69,8 +74,45 @@ public class _20_有效的括号 {
         return deque.isEmpty();
     }
 
+    /**
+     * 栈 + hash
+     *
+     * @param s
+     * @return
+     */
+    public static boolean isValid4(String s) {
+        Stack<Character> stack = new Stack<>();
+        Map<Character, Character> dict = new HashMap<>();
+        dict.put('{', '}');
+        dict.put('(', ')');
+        dict.put('[', ']');
+
+        for (char c : s.toCharArray()) {
+            // 左字符：push
+            if (dict.containsKey(c))
+                stack.push(c);
+            else if (stack.isEmpty()) // )}]时，栈为空，不匹配
+                return false;
+            else {// 栈不为空时，右字符与pop比较
+
+                if (c != dict.get(stack.pop())) return false;
+            }
+        }
+        // char循环完，栈不为空 不匹配  例如：()[
+        return stack.isEmpty();
+    }
+
     public static void main(String[] args) {
         String s = "{{(){)}";
-        System.out.println(isValid2(s));
+//        System.out.println(isValid2(s));
+
+        s = "()";
+        System.out.println(isValid4(s));
+
+        s = "(]";
+        System.out.println(isValid4(s));
+
+        s = "()[]{}";
+        System.out.println(isValid4(s));
     }
 }

@@ -1,4 +1,4 @@
-package com.leetcode;
+package com.leetcode._206;
 
 
 public class _206_反转链表 {
@@ -13,12 +13,10 @@ public class _206_反转链表 {
         if (head == null || head.next == null)
             return head;
         ListNode newHead = reverseList1(head.next);
-        /*
-            原始链表：node1 node2
-            方法内变量：newHead = node2  head = node1
-            当前node.next.next指向当前node
-         */
-        head.next.next = head; // node2.next = node1
+        // 反转node
+        // 原始链表：node1 node2
+        // node2.next = node1
+        head.next.next = head;
         head.next = null;
         return newHead;
     }
@@ -33,10 +31,17 @@ public class _206_反转链表 {
         if (head == null || head.next == null) return head;
         ListNode newHead = null;
         while (head != null) {
-            ListNode tmp = head.next; // tmp = node2(node1.next)
-            head.next = newHead; // node1.next = null
-            newHead = head; // newHead = node1
-            head = tmp; // head = node2
+            ListNode tmp = head.next;
+            head.next = newHead;
+            newHead = head;
+            head = tmp;
+            /**
+             * loop1：
+             * tmp = node2; node2作为临时变量
+             * node1.next = newHead; 将node1.next指向newHead
+             * newHead = node1; 将newHead指向node1
+             * head = node2; 将node2做为head
+             */
         }
 
         return newHead;
@@ -50,25 +55,11 @@ public class _206_反转链表 {
         node1.next = node2;
         node2.next = node3;
 
-        ListNode newHead = reverses(node1);
+        ListNode newHead = reverseList2(node1);
 
         while (newHead != null) {
             System.out.println(newHead.val);
             newHead = newHead.next;
         }
-    }
-
-    public static ListNode reverses(ListNode head) {
-        if (head == null || head.next == null) return head;
-
-        ListNode newHead = null;
-        while (head != null) {
-            ListNode headNext = head.next;
-            head.next = newHead;
-            newHead = head;
-            head = headNext;
-        }
-
-        return newHead;
     }
 }
